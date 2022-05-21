@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { GOOGLE_CLIENT_API_KEY } from '../misc/constants'
-import { useEffect} from 'react'
+import { useEffect } from 'react'
 import jwtDecode from 'jwt-decode'
 import { isSignedInReducer, informationReducer } from '../reducers/GoogleSlicer'
 import { isSignedInSelector } from '../reducers/GoogleSlicer'
@@ -15,15 +15,15 @@ const Navbar = () => {
     dispatch = useDispatch()
     const isSignedIn = useSelector(isSignedInSelector)
 
-  
 
-    useEffect(()=> {
-    window.google.accounts.id.initialize({
-        client_id : GOOGLE_CLIENT_API_KEY,
-        callback : JwtHandleCallback,       
+
+    useEffect(() => {
+        window.google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_API_KEY,
+            callback: JwtHandleCallback,
+        })
+
     })
-
-})
 
     return (
         <div>
@@ -31,7 +31,7 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse container-fluid">
 
 
-                    <ul className= "navbar-nav">
+                    <ul className="navbar-nav">
                         <li className="nav-item">
                             <Link className='nav-link' to="/">Home</Link>
                         </li>
@@ -41,14 +41,14 @@ const Navbar = () => {
 
                     </ul>
 
-                    <ul className= "navbar-nav ms-auto pe-2 mb-lg-0">
+                    <ul className="navbar-nav ms-auto pe-2 mb-lg-0">
                         <li className="nav-item">
-                        <button className={`btn btn-outline-success ${isSignedIn? "invisible" : "visible"}`} onClick={() => {displayOneTap()}} type="button" >
-                            Sign in with Google
-                        </button>
+                            <button className={`btn btn-outline-success ${isSignedIn ? "invisible" : "visible"}`} onClick={() => { displayOneTap() }} type="button" >
+                                Sign in with Google
+                            </button>
                         </li>
-                        </ul>
- 
+                    </ul>
+
                 </div>
             </nav>
         </div>
@@ -63,7 +63,7 @@ const JwtHandleCallback = (response) => {
     console.log(decoded_response)
     dispatch(isSignedInReducer(true))
     dispatch(informationReducer({
-        first_name : decoded_response.given_name,
+        first_name: decoded_response.given_name,
         last_name: decoded_response.family_name,
         email: decoded_response.email
     }))
@@ -73,7 +73,7 @@ const displayOneTap = () => {
     console.log(window.google.accounts)
     window.google.accounts.id.prompt((notification) => {
         if (notification.isNotDisplayed()) {
-          console.log("notification not being displayed...")
+            console.log("notification not being displayed...")
         }
     });
 }

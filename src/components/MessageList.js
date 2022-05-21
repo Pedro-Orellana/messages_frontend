@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { messsageListSelector, getMessageList } from "../reducers/MessageSlicer";
 
@@ -6,19 +6,19 @@ import { messsageListSelector, getMessageList } from "../reducers/MessageSlicer"
 var messageList
 var dispatch
 const MessageList = () => {
-    
+
     dispatch = useDispatch()
     messageList = useSelector(messsageListSelector)
-    
 
-    useEffect(()=>{
+
+    useEffect(() => {
         dispatch(getMessageList())
-    },[])
+    }, [])
 
-    
+
     return (<div className="row justify-content-center mt-5">
 
-            {messageList.messageList.length? <DisplayMessageList/> : <NoMessageList/>}
+        {messageList.messageList.length ? <DisplayMessageList /> : <NoMessageList />}
     </div>)
 }
 
@@ -38,14 +38,14 @@ const DisplayMessageList = () => {
             {messageList.messageList.map((message) => {
                 return (
                     <li className="list-group-item mt-5" key={message._id}>
-                        <div className = "card">
-                            <div className= "card-header">
+                        <div className="card">
+                            <div className="card-header">
                                 {message.first_name + ' ' + message.last_name}
                             </div>
-                            <div className = "card-body">
-                                <blockquote className = "blockquote mb-0">
+                            <div className="card-body">
+                                <blockquote className="blockquote mb-0">
                                     <p>{message.message}</p>
-                                    <footer className = "blockquote-footer">Contact this person at: <cite title="Source Title">{message.email}</cite></footer>
+                                    <footer className="blockquote-footer">Contact this person at: <cite title="Source Title">{message.email}</cite></footer>
                                 </blockquote>
                             </div>
                         </div>
